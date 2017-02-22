@@ -5338,6 +5338,12 @@ public final class Settings {
         public static final String PULSE_SOLID_UNITS_OPACITY = "pulse_solid_units_opacity";
 
         /**
+         * Pulse Solid units count
+         * @hide
+         */
+        public static final String PULSE_SOLID_UNITS_COUNT = "pulse_solid_units_count";
+
+        /**
          * A flag containing settings used for biometric weak
          * @hide
          */
