@@ -2727,12 +2727,6 @@ public final class Settings {
         public static final String LOCK_PATTERN_TACTILE_FEEDBACK_ENABLED =
             "lock_pattern_tactile_feedback_enabled";
 
-	 /**
- 	  * Whether to show the battery info on the lockscreen while charging
-   	  * @hide
- 	  */
-	public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
-
         /**
          * A formatted string of the next alarm that is set, or the empty string
          * if there is no alarm set.
