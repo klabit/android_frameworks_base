@@ -628,7 +628,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private final SuController.Callback mSuCallback = new SuController.Callback() {
         @Override
         public void onSuSessionsChanged() {
-            updateSu();
+        updateSu();
         }
     };
 
