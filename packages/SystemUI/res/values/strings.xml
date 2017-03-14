@@ -761,6 +761,8 @@
     <string name="quick_settings_night_display_summary_on">Night Light on, tap to turn off</string>
     <!-- QuickSettings: Label for the toggle to activate Night display when it's off (renamed "Night Light" with title caps). [CHAR LIMIT=NONE] -->
     <string name="quick_settings_night_display_summary_off">Night Light off, tap to turn on</string>
+    <!-- Recents: The empty recents string. [CHAR LIMIT=NONE] -->
+    <string name="recents_empty_message">No recent apps</string>
     <!-- Recents: The empty recents string after dismissing all tasks. [CHAR LIMIT=NONE] -->
     <string name="recents_empty_message_dismissed_all">You\'ve cleared everything</string>
     <!-- Recents: The info panel app info button string. [CHAR LIMIT=NONE] -->
