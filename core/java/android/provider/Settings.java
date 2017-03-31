@@ -5344,6 +5344,12 @@ public final class Settings {
         public static final String PULSE_SOLID_UNITS_COUNT = "pulse_solid_units_count";
 
         /**
+         * SmartBar buttons opacity on Pulse
+         * @hide
+         */
+        public static final String PULSE_CUSTOM_BUTTONS_OPACITY = "pulse_custom_buttons_opacity";
+
+        /**
          * A flag containing settings used for biometric weak
          * @hide
          */
