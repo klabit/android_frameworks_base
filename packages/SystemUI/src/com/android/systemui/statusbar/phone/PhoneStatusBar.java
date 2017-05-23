@@ -513,7 +513,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     };
 
-    class DevForceNavbarObserver extends ContentObserver {
+/*    class DevForceNavbarObserver extends ContentObserver {
         DevForceNavbarObserver(Handler handler) {
             super(handler);
         }
@@ -548,13 +548,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 removeNavigationBar();
             }
         }
-    }
+    } */
 
-    private void forceAddNavigationBar() {
-        // If we have no Navbar view and we should have one, create it
-        if (mNavigationBarView != null) {
-            return;
-        }
 
         mNavigationBarView =
                 (NavigationBarView) View.inflate(mContext, R.layout.navigation_bar, null);
