@@ -551,12 +551,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     } */
 
 
-        mNavigationBarView =
+    /*    mNavigationBarView =
                 (NavigationBarView) View.inflate(mContext, R.layout.navigation_bar, null);
 
         mNavigationBarView.setDisabledFlags(mDisabled1);
         addNavigationBar();
-    }
+    } */
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
@@ -828,9 +828,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (mNavigationController == null) {
             mNavigationController = new NavigationController(mContext, mContext.getResources(), this);
         }
-        mPackageMonitor = new DUPackageMonitor();
+        /*mPackageMonitor = new DUPackageMonitor();
         mPackageMonitor.register(mContext, mHandler);
-        mPackageMonitor.addListener(mNavigationController);
+        mPackageMonitor.addListener(mNavigationController); */
 
         super.start(); // calls createAndAddWindows()
 
@@ -841,7 +841,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         addNavigationBar();
 
-        // Developer options - Force Navigation bar
+       /* // Developer options - Force Navigation bar
         try {
             boolean needsNav = mWindowManagerService.needsNavigationBar();
             if (!needsNav) {
@@ -850,7 +850,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             }
         } catch (RemoteException ex) {
             // no window manager? good luck with that
-        }
+        } */
 
         TunerService.get(mContext).addTunable(this,
                 SCREEN_BRIGHTNESS_MODE,
@@ -1509,6 +1509,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     };
 
+    private View.OnLongClickListener mLongPressBackListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            return handleLongPressBack();
+        }
+    };
+
     @Override
     protected void toggleSplitScreenMode(int metricsDockAction, int metricsUndockAction) {
         if (mRecents == null) {
@@ -1598,39 +1605,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (DEBUG) Log.v(TAG, "addNavigationBar: about to add " + mNavigationController.getBar());
         if (mNavigationController.getBar() == null) return;
 
-        try {
-            WindowManagerGlobal.getWindowManagerService()
-                    .watchRotation(new IRotationWatcher.Stub() {
-                @Override
-                public void onRotationChanged(int rotation) throws RemoteException {
-                    // We need this to be scheduled as early as possible to beat the redrawing of
-                    // window in response to the orientation change.
-                    Message msg = Message.obtain(mHandler, () -> {
-                        if (mNavigationBarView != null
-                                && mNavigationBarView.needsReorient(rotation)) {
-                            repositionNavigationBar();
-                        }
-                    });
-                    msg.setAsynchronous(true);
-                    mHandler.sendMessageAtFrontOfQueue(msg);
-                }
-            });
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
-
         prepareNavigationBarView();
 
         mWindowManager.addView(mNavigationController.getBar().getBaseView(), getNavigationBarLayoutParams());
     }
 
-    private void removeNavigationBar() {
+    /*private void removeNavigationBar() {
         if (DEBUG) Log.d(TAG, "removeNavigationBar: about to remove " + mNavigationBarView);
         if (mNavigationBarView == null) return;
 
         mWindowManager.removeView(mNavigationBarView);
         mNavigationBarView = null;
-    }
+    } */
 
     protected void repositionNavigationBar() {
         if (mNavigationController.getBar() == null || !mNavigationController.getBar().getBaseView().isAttachedToWindow()) return;
@@ -3005,7 +2991,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         mExpandedVisible = true;
         if (mNavigationController.getBar() != null)
-            mNavigationController.getBar().setSlippery(true);
+            /* mNavigationController.getBar().setSlippery(true); */
 
         // Expand the window to encompass the full screen in anticipation of the drag.
         // This is only possible to do atomically because the status bar is at the top of the screen!
@@ -3146,7 +3132,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
 
         if (mNavigationController.getBar() != null)
-            mNavigationController.getBar().setSlippery(false);
+            /* mNavigationController.getBar().setSlippery(false); */
         visibilityChanged(false);
 
         // Shrink the window to the size of the status bar only
@@ -4865,9 +4851,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mStackScroller.setActivatedChild(view);
     }
 
-    public ButtonDispatcher getHomeButton() {
+    /* public ButtonDispatcher getHomeButton() {
         return mNavigationBarView.getHomeButton();
-    }
+    } */
 
     /**
      * @param state The {@link StatusBarState} to set.
@@ -5242,7 +5228,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
      * 1) Not currently in screen pinning (lock task).
      * 2) Back is long-pressed without recents.
      */
-    private boolean handleLongPressBackRecents(View v) {
+    private boolean handleLongPressBack(View v) {
         try {
             IActivityManager activityManager = ActivityManagerNative.getDefault();
             if (activityManager.isInLockTaskMode()) {
@@ -5563,17 +5549,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     @Override
     public void onTuningChanged(String key, String newValue) {
+
         switch (key) {
             case SCREEN_BRIGHTNESS_MODE:
                 mAutomaticBrightness = newValue != null && Integer.parseInt(newValue)
                         == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
-                break;
-            case NAVBAR_LEFT_IN_LANDSCAPE:
-                if (mNavigationBarView != null) {
-                    final boolean navLeftInLandscape = newValue != null &&
-                            Integer.parseInt(newValue) == 1;
-                    mNavigationBarView.setLeftInLandscape(navLeftInLandscape);
-                }
                 break;
             case STATUS_BAR_BRIGHTNESS_CONTROL:
                 mBrightnessControl = newValue != null && Integer.parseInt(newValue) == 1;
